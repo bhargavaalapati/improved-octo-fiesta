@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026: Your Moment ✨</title>
+    
+    <meta property="og:title" content="2026 Destiny Unlocker 🔮">
+    <meta property="og:description" content="I coded a bot to predict your 2026. Click to reveal your fortune (Only works once!) ✨">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=1000&auto=format&fit=crop"> 
+    <meta property="og:url" content="https://bhargavaalapati.github.io/new-year-vibes/">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #3b0764 100%);
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Toast Animation */
+        .toast-enter {
+            transform: translateY(0) !important;
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center relative p-4">
+
+    <div id="toast" class="fixed top-5 z-50 transform -translate-y-20 opacity-0 transition-all duration-500 ease-in-out">
+        <div class="bg-white text-purple-900 px-6 py-3 rounded-full shadow-2xl font-bold flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span id="toast-msg">Copied to clipboard!</span>
+        </div>
+    </div>
+
+    <div class="absolute bg-purple-600 w-64 h-64 top-0 left-0 opacity-50 blur-[80px] z-0"></div>
+    <div class="absolute bg-blue-600 w-96 h-96 bottom-0 right-0 opacity-40 blur-[80px] z-0"></div>
+
+    <div class="glass-card p-8 md:p-10 max-w-xl w-full text-center relative z-10 flex flex-col justify-center items-center transition-all duration-500 min-h-[500px]">
+        
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-2 tracking-tight">2026</h1>
+        <p class="text-blue-200 text-sm tracking-widest uppercase mb-6">The Year of You</p>
+
+        <div id="countdown-container" class="hidden w-full">
+            <p class="text-xl mb-6 text-gray-300">Unlocking destiny in:</p>
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="bg-white/10 p-4 rounded-xl">
+                    <span id="hours" class="text-4xl font-bold glow-text">00</span>
+                    <p class="text-xs text-gray-400 mt-1">HOURS</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl">
+                    <span id="minutes" class="text-4xl font-bold glow-text">00</span>
+                    <p class="text-xs text-gray-400 mt-1">MINS</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl">
+                    <span id="seconds" class="text-4xl font-bold glow-text">00</span>
+                    <p class="text-xs text-gray-400 mt-1">SECS</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="fortune-container" class="hidden w-full flex flex-col items-center">
+            
+            <div id="message-area" class="min-h-[100px] flex items-center justify-center mb-6 w-full">
+                <p id="fortune-text" class="text-2xl md:text-3xl font-semibold leading-relaxed animate__animated px-2">
+                    Happy New Year! ✨
+                </p>
+            </div>
+
+            <button id="reveal-btn" onclick="revealDestiny()" 
+                class="bg-white text-purple-900 font-bold py-4 px-10 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-105 transition transform duration-200 active:scale-95 text-lg">
+                Unlock My Fortune 🔓
+            </button>
+
+            <div id="share-section" class="hidden w-full mt-2 animate__animated animate__fadeInUp">
+                <p class="text-sm text-gray-300 mb-4 italic">Destiny unlocked. Share the vibe:</p>
+                
+                <div class="grid grid-cols-3 gap-2 w-full">
+                    
+                    <a id="btn-wa" href="#" target="_blank" class="social-btn bg-[#25D366] text-white py-3 px-2 rounded-xl flex flex-col md:flex-row items-center justify-center font-semibold transition shadow-lg text-xs md:text-sm">
+                        <svg class="w-5 h-5 md:mr-2 mb-1 md:mb-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        WhatsApp
+                    </a>
+
+                    <button onclick="copyToClipboard('instagram')" class="social-btn bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white py-3 px-2 rounded-xl flex flex-col md:flex-row items-center justify-center font-semibold transition shadow-lg text-xs md:text-sm">
+                        <svg class="w-5 h-5 md:mr-2 mb-1 md:mb-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        Insta
+                    </button>
+
+                    <button onclick="copyToClipboard('facebook')" class="social-btn bg-[#1877F2] text-white py-3 px-2 rounded-xl flex flex-col md:flex-row items-center justify-center font-semibold transition shadow-lg text-xs md:text-sm">
+                        <svg class="w-5 h-5 md:mr-2 mb-1 md:mb-0" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-2 w-full text-center z-20 pointer-events-none">
+        <p class="text-[10px] md:text-xs text-white/40 tracking-widest uppercase font-light pointer-events-auto">
+            Created by <a href="https://github.com/bhargavaalapati" target="_blank" class="font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-yellow-400 to-orange-500 hover:scale-105 transition transform inline-block">Alapati Bhargava Rama</a> 
+            <span class="mx-2 text-white/20">|</span> 
+            Co-pilot <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Gemini 3 Pro</span>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // === CONFIGURATION ===
+        // 1. DATE: Set to "2025" to test NOW, change to "2026" before sending to friends!
+        const targetDate = new Date("January 1, 2026 00:00:00").getTime();
+        
+        // 2. URL: ⚠️ REPLACE THIS WITH YOUR REAL GITHUB LINK ⚠️
+        // If this is wrong, Twitter and WhatsApp share buttons will fail or look empty.
+        const siteURL = "https://github.com/bhargavaalapati/improved-octo-fiesta.git";
+        const creatorName = "Alapati Bhargava Rama"; 
+
+        const countdownContainer = document.getElementById('countdown-container');
+        const fortuneContainer = document.getElementById('fortune-container');
+        const revealBtn = document.getElementById('reveal-btn');
+        const fortuneText = document.getElementById('fortune-text');
+        const shareSection = document.getElementById('share-section');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-msg');
+
+        const fortunes = [
+            "2026 is your year of high reward. Go get it. 🚀",
+            "Your vibe attracts your tribe. Expect new connections. 🤝",
+            "Big risks, bigger wins. Be brave this year. 🦁",
+            "Clear your mind, the path is already there. 🧘",
+            "You're going to be so proud of yourself by December. 🏆",
+            "Focus on progress, not perfection. 🌱",
+            "Financial growth is in your cards. 💰",
+            "Love and laughter will find you in unexpected places. ❤️",
+            "Code, Sleep, Repeat? No. Code, Create, Dominate. 💻",
+            "The project you're scared to start? Start it now. 🔥",
+            "Your energy is currency. Spend it wisely. ⚡",
+            "Main Character Energy only in 2026. ✨",
+            "Consistency is your superpower this year. 🗝️",
+            "A surprise opportunity is coming sooner than you think. 🎁",
+            "Protect your peace. It's expensive. 🛡️",
+            "You are exactly where you need to be to level up. 📈",
+            "Don't look back, you're not going that way. ➡️",
+            "Kindness will open doors that intelligence cannot. 🚪",
+            "Upgrade your skills, upgrade your life. 📚",
+            "Stop waiting for the 'right time'. It's today. ⏰",
+            "Your code will compile on the first try... occasionally. 😉",
+            "Simplicity is the ultimate sophistication. Keep it clean. 🎨",
+            "Drink more water. Debug with a clear head. 💧",
+            "Travel is in your future. Pack your bags. ✈️",
+            "This is the year you finally master that one hard skill. 🧠",
+            "Luck is what happens when preparation meets opportunity. 🍀",
+            "Believe in your sauce. You got this. 🍝",
+            "Say 'Yes' to new adventures. 🗺️",
+            "Your potential is loading... 100% Complete. 🔋",
+            "Make it happen. Shock everyone. ⚡"
+        ];
+
+        function updateState() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const savedFortune = localStorage.getItem('2026_fortune_claimed');
+
+            if (distance > 0) {
+                countdownContainer.classList.remove('hidden');
+                fortuneContainer.classList.add('hidden');
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            } else {
+                countdownContainer.classList.add('hidden');
+                fortuneContainer.classList.remove('hidden');
+                if (savedFortune) {
+                    showLockedState(savedFortune);
+                } else {
+                    revealBtn.classList.remove('hidden');
+                }
+            }
+        }
+
+        function revealDestiny() {
+            const randomMsg = fortunes[Math.floor(Math.random() * fortunes.length)];
+            localStorage.setItem('2026_fortune_claimed', randomMsg);
+            
+            fortuneText.classList.remove('animate__fadeIn');
+            fortuneText.classList.add('animate__fadeOut');
+
+            setTimeout(() => {
+                fortuneText.innerText = randomMsg;
+                fortuneText.classList.remove('animate__fadeOut');
+                fortuneText.classList.add('animate__fadeInUp');
+                
+                var end = Date.now() + (2 * 1000);
+                var colors = ['#ffffff', '#a78bfa', '#fbbf24'];
+                (function frame() {
+                    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                    if (Date.now() < end) requestAnimationFrame(frame);
+                }());
+
+                showLockedState(randomMsg);
+            }, 500);
+        }
+
+        function showLockedState(msg) {
+            fortuneText.innerText = msg;
+            revealBtn.classList.add('hidden'); 
+            shareSection.classList.remove('hidden');
+
+            const shareText = `🔮 *My 2026 Destiny:* "${msg}"\n\n👨‍💻 Built by ${creatorName} x Gemini\n\nTap to reveal yours:`;
+            
+            // Encode for Share Buttons
+            const encodedText = encodeURIComponent(shareText);
+            const encodedURL = encodeURIComponent(siteURL);
+
+            // WhatsApp
+            document.getElementById('btn-wa').href = `https://api.whatsapp.com/send?text=${encodedText}%20${encodedURL}`;
+            
+            // X / Twitter
+            document.getElementById('btn-x').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`🔮 My 2026 Destiny: "${msg}"\n\n👨‍💻 Built by ${creatorName} x Gemini\n\n`)}&url=${encodedURL}`;
+        }
+
+        function copyToClipboard(platform) {
+            const msg = fortuneText.innerText;
+            const cleanText = `🔮 My 2026 Destiny: "${msg}"\n\n👨‍💻 Built by ${creatorName} x Gemini\n\nCheck yours: ${siteURL}`;
+            
+            navigator.clipboard.writeText(cleanText).then(() => {
+                // Show Toast
+                toastMsg.innerText = `Copied! Opening ${platform}...`;
+                toast.classList.add('toast-enter');
+                
+                // Hide Toast & Open App
+                setTimeout(() => {
+                    toast.classList.remove('toast-enter');
+                    if (platform === 'instagram') {
+                        window.location.href = "https://instagram.com";
+                    } else if (platform === 'facebook') {
+                        window.location.href = "https://facebook.com";
+                    }
+                }, 2000);
+            });
+        }
+
+        setInterval(updateState, 1000);
+        updateState();
+    </script>
+</body>
+</html>
