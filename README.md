@@ -2,7 +2,7 @@
 
 A fun, interactive, and "vibe-coded" web experience to ring in the New Year! This app counts down to midnight and then unlocks a unique, one-time fortune for every user to kickstart their 2026.
 
-**🔗 Live Demo:** [Click here to Unlock Your Destiny](https://github.com/bhargavaalapati/improved-octo-fiesta)
+**🔗 Live Demo:** [Click here to Unlock Your Destiny](https://bhargavaalapati.github.io/improved-octo-fiesta/)
 
 ---
 
