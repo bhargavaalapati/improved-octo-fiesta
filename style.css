@@ -1,0 +1,61 @@
+body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #3b0764 100%);
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glow-text {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Toast Animation */
+.toast-enter {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
+
+/* 📢 News Ticker Animation */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-content {
+    display: inline-block;
+    padding-left: 100%;
+    /* Starts from the right */
+    animation: ticker-move 20s linear infinite;
+    /* 20s = Slow and steady */
+}
+
+/* Pause the text when you hover over it so it's easier to read */
+.ticker-wrap:hover .ticker-content {
+    animation-play-state: paused;
+}
+
+@keyframes ticker-move {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}

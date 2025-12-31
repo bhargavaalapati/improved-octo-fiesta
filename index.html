@@ -5,48 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026: Your Moment ✨</title>
     
+<meta name="description" content="Unlock your 2026 destiny with this interactive fortune teller. Features audio, animations, and a time-capsule calendar reminder. Created by Bhargava.">
+<meta name="keywords" content="2026, New Year, Fortune Cookie, Tech Prediction, Bhargava Alapati, Web Experiment">
+<meta name="author" content="Alapati Bhargava Rama">
+<meta name="theme-color" content="#3b0764"> <meta property="og:type" content="website">
+<meta property="og:site_name" content="2026 Destiny Unlocker">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🔮 Unlock Your 2026 Destiny">
+<meta name="twitter:description" content="What does 2026 hold for you? Click to reveal.">
+<meta name="twitter:image" content="https://bhargavaalapati.github.io/improved-octo-fiesta/preview.jpg">
+
     <meta property="og:title" content="2026 Destiny Unlocker 🔮">
-    <meta property="og:description" content="I coded a bot to predict your 2026. Click to reveal your fortune (Only works once!) ✨">
+    <meta property="og:description" content="I coded a bot to predict your 2026. Click to reveal your fortune ✨">
     <meta property="og:image" content="https://bhargavaalapati.github.io/improved-octo-fiesta/preview.jpg">
     <meta property="og:url" content="https://github.com/bhargavaalapati/improved-octo-fiesta">
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-    <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #3b0764 100%);
-            height: 100vh;
-            overflow: hidden;
-            color: white;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .glow-text {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-        }
-
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Toast Animation */
-        .toast-enter {
-            transform: translateY(0) !important;
-            opacity: 1 !important;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="flex flex-col items-center justify-center relative p-4">
 
@@ -56,6 +34,8 @@
             <span id="toast-msg">Copied to clipboard!</span>
         </div>
     </div>
+
+    <audio id="pop-sound" src="pop.mp3" preload="auto"></audio>
 
     <div class="absolute bg-purple-600 w-64 h-64 top-0 left-0 opacity-50 blur-[80px] z-0"></div>
     <div class="absolute bg-blue-600 w-96 h-96 bottom-0 right-0 opacity-40 blur-[80px] z-0"></div>
@@ -91,37 +71,47 @@
                 </p>
             </div>
 
-            <button id="reveal-btn" onclick="revealDestiny()" 
-                class="bg-white text-purple-900 font-bold py-4 px-10 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-105 transition transform duration-200 active:scale-95 text-lg">
+            <button id="reveal-btn" class="bg-white text-purple-900 font-bold py-4 px-10 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-105 transition transform duration-200 active:scale-95 text-lg">
                 Unlock My Fortune 🔓
             </button>
 
-<div id="share-section" class="hidden w-full mt-2 animate__animated animate__fadeInUp">
+            <div id="share-section" class="hidden w-full mt-2 animate__animated animate__fadeInUp">
                 <p class="text-sm text-gray-300 mb-4 italic">Destiny unlocked. Share the vibe:</p>
                 
-                <div class="grid grid-cols-2 gap-3 w-full">
-                    
+                <div class="grid grid-cols-2 gap-3 w-full mb-6">
                     <a id="btn-wa" href="#" target="_blank" class="social-btn bg-[#25D366] text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                        WhatsApp
+                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                         WhatsApp
                     </a>
-
-                    <button onclick="copyToClipboard('linkedin')" class="social-btn bg-[#0A66C2] text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
+                    <button id="btn-linkedin" class="social-btn bg-[#0A66C2] text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                         LinkedIn
                     </button>
-
-                    <button onclick="copyToClipboard('instagram')" class="social-btn bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                   <button id="btn-instagram" class="social-btn bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
+                        <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
                         Insta
                     </button>
-
-                    <button onclick="copyToClipboard('facebook')" class="social-btn bg-[#1877F2] text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
+                    <button id="btn-facebook" class="social-btn bg-[#1877F2] text-white py-3 px-2 rounded-xl flex items-center justify-center font-semibold transition shadow-lg text-sm">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         Facebook
                     </button>
-
                 </div>
+
+                <a id="calendar-btn" href="#" target="_blank" class="block w-full py-2 mb-6 rounded-lg border border-white/20 text-gray-300 text-sm hover:bg-white/10 hover:text-white transition-colors">
+                    📅 Remind me on Dec 31, 2026
+                </a>
+
+                <div class="mt-4 pt-6 border-t border-white/10 w-full">
+                    <p class="text-[10px] text-blue-200 uppercase tracking-widest mb-2 opacity-70">Next Stop: 2027</p>
+                    <div id="timer-2027" class="flex justify-center gap-3 text-sm font-mono text-gray-300 opacity-80">
+                        Loading...
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -134,151 +124,15 @@
         </p>
     </div>
 
+    <div class="fixed bottom-12 left-4 z-30 w-48 md:w-64 overflow-hidden rounded-full glass-card border border-white/10 bg-black/20 shadow-lg pointer-events-auto">
+        <div class="ticker-wrap py-2">
+            <div class="ticker-content text-xs font-semibold text-blue-100 tracking-wide">
+                ✨ Update: Turn sound ON 🔊 • Save to Calendar 📅 • Dev Tip: add ?reset=true to URL 🕵️ • 2027 Countdown added ⏳ •
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <script>
-        // === CONFIGURATION ===
-        // 1. DATE: Set to "2025" to test NOW, change to "2026" before sending to friends!
-        const targetDate = new Date("January 1, 2026 00:00:00").getTime();
-        
-        // 2. URL: ⚠️ REPLACE THIS WITH YOUR REAL GITHUB LINK ⚠️
-        // If this is wrong, Twitter and WhatsApp share buttons will fail or look empty.
-        const siteURL = "https://bhargavaalapati.github.io/improved-octo-fiesta/";
-        const creatorName = "Alapati Bhargava Rama"; 
-
-        const countdownContainer = document.getElementById('countdown-container');
-        const fortuneContainer = document.getElementById('fortune-container');
-        const revealBtn = document.getElementById('reveal-btn');
-        const fortuneText = document.getElementById('fortune-text');
-        const shareSection = document.getElementById('share-section');
-        const toast = document.getElementById('toast');
-        const toastMsg = document.getElementById('toast-msg');
-
-        const fortunes = [
-            "2026 is your year of high reward. Go get it. 🚀",
-            "Your vibe attracts your tribe. Expect new connections. 🤝",
-            "Big risks, bigger wins. Be brave this year. 🦁",
-            "Clear your mind, the path is already there. 🧘",
-            "You're going to be so proud of yourself by December. 🏆",
-            "Focus on progress, not perfection. 🌱",
-            "Financial growth is in your cards. 💰",
-            "Love and laughter will find you in unexpected places. ❤️",
-            "Code, Sleep, Repeat? No. Code, Create, Dominate. 💻",
-            "The project you're scared to start? Start it now. 🔥",
-            "Your energy is currency. Spend it wisely. ⚡",
-            "Main Character Energy only in 2026. ✨",
-            "Consistency is your superpower this year. 🗝️",
-            "A surprise opportunity is coming sooner than you think. 🎁",
-            "Protect your peace. It's expensive. 🛡️",
-            "You are exactly where you need to be to level up. 📈",
-            "Don't look back, you're not going that way. ➡️",
-            "Kindness will open doors that intelligence cannot. 🚪",
-            "Upgrade your skills, upgrade your life. 📚",
-            "Stop waiting for the 'right time'. It's today. ⏰",
-            "Your code will compile on the first try... occasionally. 😉",
-            "Simplicity is the ultimate sophistication. Keep it clean. 🎨",
-            "Drink more water. Debug with a clear head. 💧",
-            "Travel is in your future. Pack your bags. ✈️",
-            "This is the year you finally master that one hard skill. 🧠",
-            "Luck is what happens when preparation meets opportunity. 🍀",
-            "Believe in your sauce. You got this. 🍝",
-            "Say 'Yes' to new adventures. 🗺️",
-            "Your potential is loading... 100% Complete. 🔋",
-            "Make it happen. Shock everyone. ⚡"
-        ];
-
-        function updateState() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-            const savedFortune = localStorage.getItem('2026_fortune_claimed');
-
-            if (distance > 0) {
-                countdownContainer.classList.remove('hidden');
-                fortuneContainer.classList.add('hidden');
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-            } else {
-                countdownContainer.classList.add('hidden');
-                fortuneContainer.classList.remove('hidden');
-                if (savedFortune) {
-                    showLockedState(savedFortune);
-                } else {
-                    revealBtn.classList.remove('hidden');
-                }
-            }
-        }
-
-        function revealDestiny() {
-            const randomMsg = fortunes[Math.floor(Math.random() * fortunes.length)];
-            localStorage.setItem('2026_fortune_claimed', randomMsg);
-            
-            fortuneText.classList.remove('animate__fadeIn');
-            fortuneText.classList.add('animate__fadeOut');
-
-            setTimeout(() => {
-                fortuneText.innerText = randomMsg;
-                fortuneText.classList.remove('animate__fadeOut');
-                fortuneText.classList.add('animate__fadeInUp');
-                
-                var end = Date.now() + (2 * 1000);
-                var colors = ['#ffffff', '#a78bfa', '#fbbf24'];
-                (function frame() {
-                    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
-                    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
-                    if (Date.now() < end) requestAnimationFrame(frame);
-                }());
-
-                showLockedState(randomMsg);
-            }, 500);
-        }
-
-        function showLockedState(msg) {
-            fortuneText.innerText = msg;
-            revealBtn.classList.add('hidden'); 
-            shareSection.classList.remove('hidden');
-
-            const shareText = `🔮 *My 2026 Destiny:* "${msg}"\n\n👨‍💻 Built by ${creatorName} x Gemini\n\nTap to reveal yours:`;
-            
-            // Encode for Share Buttons
-            const encodedText = encodeURIComponent(shareText);
-            const encodedURL = encodeURIComponent(siteURL);
-
-            // WhatsApp
-            document.getElementById('btn-wa').href = `https://api.whatsapp.com/send?text=${encodedText}%20${encodedURL}`;
-            
-            // X / Twitter
-            document.getElementById('btn-x').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`🔮 My 2026 Destiny: "${msg}"\n\n👨‍💻 Built by ${creatorName} x Gemini\n\n`)}&url=${encodedURL}`;
-        }
-
-        function copyToClipboard(platform) {
-            const msg = fortuneText.innerText;
-            const cleanText = `🔮 My 2026 Destiny: "${msg}"\n\n👨‍💻 Built by ${creatorName} x Gemini\n\nCheck yours: ${siteURL}`;
-            
-            navigator.clipboard.writeText(cleanText).then(() => {
-                // Show Toast
-                toastMsg.innerText = `Copied! Opening ${platform}...`;
-                toast.classList.add('toast-enter');
-                
-                // Hide Toast & Open App
-                setTimeout(() => {
-                    toast.classList.remove('toast-enter');
-                    
-                    if (platform === 'instagram') {
-                        window.location.href = "https://instagram.com";
-                    } else if (platform === 'facebook') {
-                        window.location.href = "https://facebook.com";
-                    } else if (platform === 'linkedin') {
-                        window.location.href = "https://linkedin.com";
-                    }
-                }, 2000);
-            });
-        }
-        setInterval(updateState, 1000);
-        updateState();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
